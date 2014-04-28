@@ -1,0 +1,12 @@
+# Cabal
+.cabal-sandbox/
+cabal.sandbox.config
+dist/
+
+# Haskell build
+*.hi
+*.o
+
+# Editor temp files
+.*.tmp
+
