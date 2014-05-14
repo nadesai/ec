@@ -1,30 +1,26 @@
---
--- Bits.hs
---
--- Module Crypto.Number.Bits
---
--- Brandon Azad
---
--- Public Domain
---
---
-
--- |
--- This module provides several useful functions for working with numbers.
---
-
 {-# LANGUAGE MagicHash #-}
+------------------------------------------------------------------------------
+-- |
+-- Module      : Crypto.Number.Bits
+-- Copyright   : Brandon Azad
+-- License     : Public Domain
+-- Stability   : experimental
+--
+-- Bitwise manipulation of integers.
+--
+------------------------------------------------------------------------------
 
 
 module Crypto.Number.Bits
-( bitLength
-) where
+  (
+    bitLength
+  ) where
 
 
-import GHC.Types ( Int(..) )
+import GHC.Types              ( Int(..) )
 import GHC.Integer.Logarithms ( integerLog2# )
 
-import Data.Bits ()
+import Data.Bits              ( )
 
 bitLength :: Integer -> Int
 bitLength n = I# (integerLog2# n) + 1
