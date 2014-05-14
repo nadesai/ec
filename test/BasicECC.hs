@@ -191,7 +191,7 @@ multiply c p0 d = go pointAtInfinity p0 n0
     n0 = case c of
       WeierstrassPrimeCurve { weierstrassP = p } -> bitLength p
     go r0 r1 n
-      | n == -1     = r0
+      | n == -1     = r0 `seq` r1 `seq` r0
       | testBit d n = go (add c r0 r1) (double c r1) (n-1)
       | otherwise   = go (double c r0) (add c r0 r1) (n-1)
 

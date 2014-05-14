@@ -1,29 +1,28 @@
---
--- Modular.hs
---
--- Module Crypto.Number.Modular
---
--- Brandon Azad
---
--- Public Domain
---
---
-
+------------------------------------------------------------------------------
 -- |
+-- Module      : Crypto.Number.Modular
+-- Copyright   : Brandon Azad
+-- License     : Public Domain
+-- Stability   : experimental
+--
 -- Modular arithmetic.
 --
+------------------------------------------------------------------------------
+
 
 
 module Crypto.Number.Modular
-( expm
-, expm2k
-, invm
-, invm'
-, divm'
-, egcd
-, egcd'
-, crt
-) where
+  (
+    expm
+  , expm2k
+  , invm
+  , invm'
+  , divm'
+  , egcd
+  , egcd'
+  , crt
+
+  ) where
 
 import Data.Bits ( Bits, (.&.) )
 

@@ -18,7 +18,7 @@ module Main where
 import Test.Hspec
 import Test.QuickCheck
 
-import Crypto.EllipticCurve
+import qualified Crypto.EllipticCurve as EC
 
 import BasicECC
 

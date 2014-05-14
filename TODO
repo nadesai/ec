@@ -1,0 +1,13 @@
+TODO
+
+Crypto.EllipticCurve.Curve
+--------------------------
+* Add support for curves/points with different fundamental operations than
+  double and add.
+
+Crypto.EllipticCurve.Field
+--------------------------
+* Examine the feasibility of using Template Haskell to support cleaner
+  implementations of EllipticCurve's add and double methods.
+
+

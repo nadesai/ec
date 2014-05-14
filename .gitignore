@@ -8,5 +8,5 @@ dist/
 *.o
 
 # Editor temp files
-.*.tmp
+.*.swp
 

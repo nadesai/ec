@@ -1,21 +1,40 @@
---
--- Group.hs
---
--- Module Crypto.EllipticCurve.Group
---
--- Brandon Azad
--- Nikhil Desai
---
--- Public Domain
---
---
-
+{-# LANGUAGE MultiParamTypeClasses #-}
+------------------------------------------------------------------------------
 -- |
--- TODO
+-- Module      : Crypto.EllipticCurve.Group
+-- Copyright   : Brandon Azad and Nikhil Desai
+-- License     : Public Domain
+-- Stability   : experimental
 --
+-- Definitions of elliptic curve groups and related operations.
+--
+------------------------------------------------------------------------------
 
 module Crypto.EllipticCurve.Group
-(
-) where
+  (
+
+    -- Elliptic curve type
+    EllipticCurve(..)
+
+  ) where
+
+import Prelude hiding ( negate )
+import qualified Crypto.Number.Field as F
+
+
+
+-- | The class @EllipticCurve c p@ represents a formulation of a group law of
+-- the curve @c@ over a point representation @p@. While all elliptic curves
+-- @c@ should implement the same group law, the parameter @p@ allows different
+-- representations of the curve to have different implementations.
+class EllipticCurve c p where
+
+  add :: (F.Field f) => F.FieldOperations f -> c f -> p c f -> p c f -> p c f
+
+  negate :: (F.Field f) => F.FieldOperations f -> c f -> p c f -> p c f
+
+  double :: (F.Field f) => F.FieldOperations f -> c f -> p c f -> p c f
+
+
 
 

@@ -1,21 +1,22 @@
---
--- EllipticCurve.hs
---
--- Module Crypto.EllipticCurve
---
--- Brandon Azad
--- Nikhil Desai
---
--- Public Domain
---
---
-
+------------------------------------------------------------------------------
 -- |
--- This module provides an interface for working with elliptic curve groups.
+-- Module      : Crypto.EllipticCurve
+-- Copyright   : Brandon Azad and Nikhil Desai
+-- License     : Public Domain
+-- Stability   : experimental
 --
+-- Operations on elliptic curve groups.
+--
+------------------------------------------------------------------------------
 
 module Crypto.EllipticCurve
-(
-) where
+  (
+    module Crypto.EllipticCurve.Curve
+  , module Crypto.EllipticCurve.Group
+  , module Crypto.EllipticCurve.Point
+  ) where
 
+import Crypto.EllipticCurve.Curve
+import Crypto.EllipticCurve.Group
+import Crypto.EllipticCurve.Point
 
