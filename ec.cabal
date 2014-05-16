@@ -28,6 +28,7 @@ library
     Crypto.EllipticCurve.Curve
     Crypto.EllipticCurve.Group
     Crypto.EllipticCurve.Point
+    Crypto.EllipticCurve.Type
     Crypto.Number.Bits
     Crypto.Number.Field
     Crypto.Number.Modular

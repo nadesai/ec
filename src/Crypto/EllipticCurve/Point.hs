@@ -26,20 +26,16 @@ module Crypto.EllipticCurve.Point
 
   ) where
 
-
 import qualified Crypto.Number.Field as F
-import Crypto.EllipticCurve.Group
-import Crypto.EllipticCurve.Curve
+import Crypto.EllipticCurve.Type
 
 
 
 class EllipticCurvePoint c p where
 
-  toAffine   :: (F.Field f, EllipticCurve c p)
-             => EC c f -> p c f -> Affine c f
+  toAffine   :: (F.Field f) => EC c f -> p c f -> Affine c f
 
-  fromAffine :: (F.Field f, EllipticCurve c p)
-             => EC c f -> Affine c f -> p c f
+  fromAffine :: (F.Field f) => EC c f -> Affine c f -> p c f
 
 
 -- | Affine representation of a point.
@@ -59,5 +55,7 @@ data Jacobian (c :: * -> *) f = Jacobian
   { jacobianX, jacobianY, jacobianZ :: f }
   deriving (Show)
 
+-- Instances of @Jacobian@ are provided by specific curves in
+-- Crypto.EllipticCurve.Curve.
 
 

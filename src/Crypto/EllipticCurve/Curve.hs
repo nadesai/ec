@@ -1,4 +1,4 @@
-{-# LANGUAGE ExistentialQuantification #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Crypto.EllipticCurve.Curve
@@ -6,22 +6,43 @@
 -- License     : Public Domain
 -- Stability   : experimental
 --
--- Definitions of elliptic curves.
+-- Definitions of elliptic curve representations.
 --
 ------------------------------------------------------------------------------
 
 module Crypto.EllipticCurve.Curve
   (
-    EC(..)
+    WeierstrassCurve(..)
   ) where
 
+import Prelude hiding ( negate )
 import qualified Crypto.Number.Field as F
+import Crypto.EllipticCurve.Type
+import Crypto.EllipticCurve.Point
 import Crypto.EllipticCurve.Group
 
 
 
-data EC c f = forall p. (F.Field f, EllipticCurve c p) =>
-              EC (c f) (F.FieldParameter f)
+-- | A Weierstrass representation of an elliptic curve.
+-- y^2 = x^3 + ax + b
+data WeierstrassCurve f = WeierstrassCurve
+  { weierstrassA, weierstrassB :: f }
+  deriving (Show)
+
+
+-- |
+instance EllipticCurvePoint WeierstrassCurve Jacobian where
+
+  toAffine = undefined
+  fromAffine = undefined
+
+
+-- | 
+instance EllipticCurve WeierstrassCurve Jacobian where
+
+  add = undefined
+  negate = undefined
+  double = undefined
 
 
 

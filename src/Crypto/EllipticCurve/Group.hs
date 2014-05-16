@@ -20,6 +20,8 @@ module Crypto.EllipticCurve.Group
 
 import Prelude hiding ( negate )
 import qualified Crypto.Number.Field as F
+import Crypto.EllipticCurve.Type
+import Crypto.EllipticCurve.Point
 
 
 
@@ -29,11 +31,11 @@ import qualified Crypto.Number.Field as F
 -- representations of the curve to have different implementations.
 class EllipticCurve c p where
 
-  add :: (F.Field f) => F.FieldOperations f -> c f -> p c f -> p c f -> p c f
+  add :: (F.Field f) => EC c f -> p c f -> p c f -> p c f
 
-  negate :: (F.Field f) => F.FieldOperations f -> c f -> p c f -> p c f
+  negate :: (F.Field f) => EC c f -> p c f -> p c f
 
-  double :: (F.Field f) => F.FieldOperations f -> c f -> p c f -> p c f
+  double :: (F.Field f) => EC c f -> p c f -> p c f
 
 
 
