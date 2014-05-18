@@ -19,7 +19,7 @@ module Crypto.EllipticCurve.Group
   ) where
 
 import Prelude hiding ( negate )
-import qualified Crypto.Number.Field as F
+import Crypto.Number.Field hiding ( add )
 import Crypto.EllipticCurve.Type
 import Crypto.EllipticCurve.Point
 
@@ -29,13 +29,13 @@ import Crypto.EllipticCurve.Point
 -- the curve @c@ over a point representation @p@. While all elliptic curves
 -- @c@ should implement the same group law, the parameter @p@ allows different
 -- representations of the curve to have different implementations.
-class EllipticCurve c p where
+class (EllipticCurvePoint c p) => EllipticCurve c p where
 
-  add :: (F.Field f) => EC c f -> p c f -> p c f -> p c f
+  add    :: (Field f) => EC c f -> p c f -> p c f -> p c f
 
-  negate :: (F.Field f) => EC c f -> p c f -> p c f
+  negate :: (Field f) => EC c f -> p c f -> p c f
 
-  double :: (F.Field f) => EC c f -> p c f -> p c f
+  double :: (Field f) => EC c f -> p c f -> p c f
 
 
 

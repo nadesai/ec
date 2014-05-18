@@ -1,4 +1,3 @@
-{-# LANGUAGE ExistentialQuantification #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Crypto.EllipticCurve.Type
@@ -15,12 +14,12 @@ module Crypto.EllipticCurve.Type
     EC(..)
   ) where
 
-import qualified Crypto.Number.Field as F
+import Crypto.Number.Field
 
 
 
 -- | The @EC@ type holds an elliptic curve definition and the parameterization
 -- of the underlying field.
-data EC c f = EC (c f) (F.FieldParameter f)
+data EC c f = EC (c f) (FieldOperations f)
 
 

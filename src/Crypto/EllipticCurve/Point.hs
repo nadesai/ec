@@ -26,16 +26,16 @@ module Crypto.EllipticCurve.Point
 
   ) where
 
-import qualified Crypto.Number.Field as F
+import Crypto.Number.Field
 import Crypto.EllipticCurve.Type
 
 
 
 class EllipticCurvePoint c p where
 
-  toAffine   :: (F.Field f) => EC c f -> p c f -> Affine c f
+  toAffine   :: (Field f) => EC c f -> p c f -> Affine c f
 
-  fromAffine :: (F.Field f) => EC c f -> Affine c f -> p c f
+  fromAffine :: (Field f) => EC c f -> Affine c f -> p c f
 
 
 -- | Affine representation of a point.

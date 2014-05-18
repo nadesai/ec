@@ -1,17 +1,13 @@
---
--- Test.hs
---
--- Brandon Azad
--- Nikhil Desai
---
--- Public Domain
---
---
-
+------------------------------------------------------------------------------
 -- |
--- A test suite for this implementation of ECC.
+-- Module      : Test
+-- Copyright   : Brandon Azad and Nikhil Desai
+-- License     : Public Domain
+-- Stability   : experimental
 --
-
+-- A test suite for EC.
+--
+------------------------------------------------------------------------------
 
 module Main where
 

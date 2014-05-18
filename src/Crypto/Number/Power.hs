@@ -15,7 +15,7 @@ module Crypto.Number.Power
 
   -- * Fast exponentiation
 
-    sqpow
+    expsq
 
   -- * Timing attack resistant exponentiation
 
@@ -37,10 +37,10 @@ gpow pow op inv id a n
 
 -- | Fast general group exponentiation by squaring. The implementation is
 -- based off of Prelude.(^).
-sqpow :: (a -> a -> a) -> (a -> a) -> a -> a -> Integer -> a
-sqpow = gpow sqpow'
+expsq :: (a -> a -> a) -> (a -> a) -> a -> a -> Integer -> a
+expsq = gpow expsq'
   where
-    sqpow' op = go1
+    expsq' op = go1
       where
         go1 a n
           | even n    = go1 (a `op` a) (n `quot` 2)

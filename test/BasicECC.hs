@@ -1,18 +1,14 @@
---
--- BasicECC.hs
---
--- Module BasicECC
---
--- Brandon Azad
--- Nikhil Desai
---
--- Public Domain
---
---
-
+------------------------------------------------------------------------------
 -- |
--- A test module to implement ECC on Weierstrass curves over prime fields.
+-- Module      : BasicECC
+-- Copyright   : Brandon Azad and Nikhil Desai
+-- License     : Public Domain
+-- Stability   : experimental
 --
+-- Simple Elliptic Curve Cryptography implementation for Weierstrass curves
+-- over prime-order finite fields.
+--
+------------------------------------------------------------------------------
 
 module BasicECC
 ( WeierstrassCurve(..)
