@@ -35,7 +35,7 @@ library
     Crypto.Number.Power
     Crypto.Number.Prime
   build-depends:
-    base >=4.6 && <4.7,
+    base >=4.6 && <4.8,
     ghc-prim,
     integer-gmp
   default-language: Haskell2010
