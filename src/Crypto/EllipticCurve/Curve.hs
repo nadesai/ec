@@ -1,4 +1,5 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
+{-# LANGUAGE RecordWildCards       #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Crypto.EllipticCurve.Curve
@@ -24,7 +25,6 @@ import Crypto.EllipticCurve.Group
 
 
 
-
 -- | A Weierstrass representation of an elliptic curve, @y^2 = x^3 + ax + b@.
 data WeierstrassCurve f = WeierstrassCurve
   { weierstrassA, weierstrassB :: f }
@@ -35,15 +35,11 @@ data WeierstrassCurve f = WeierstrassCurve
 -- ('WeierstrassCurve') using the 'Affine' point representation.
 instance EllipticCurve WeierstrassCurve Affine where
 
-  onCurve (EC (WeierstrassCurve a b)
-              (FieldOperations (+) _ _ _ (*) _ _ (^)))
-          p
+  onCurve (EC (WeierstrassCurve a b) FieldOperations {..}) p
     | AffinePointAtInfinity <- p = True
     | (Affine x y)          <- p = y ^ 2 == (x ^ 3) + (a * x) + b
 
-  add c@(EC (WeierstrassCurve a _)
-            (FieldOperations (+) _ (-) (#) (*) _ (/) (^)))
-      p1 p2
+  add c@(EC (WeierstrassCurve a _) FieldOperations {..}) p1 p2
     | isZeroPoint c p1 = p2
     | isZeroPoint c p2 = p1
     | (Affine x1 y1) <- p1, (Affine x2 y2) <- p2 =
@@ -58,8 +54,7 @@ instance EllipticCurve WeierstrassCurve Affine where
                   else zeroPoint c
            else add' $ dy / dx
 
-  negate (EC _ (FieldOperations { fneg = neg })) (Affine x y) =
-    Affine x (neg y)
+  negate (EC _ FieldOperations {..}) (Affine x y) = Affine x ((.-) y)
 
   -- Default implementation of 'multiply'.
 
@@ -68,10 +63,10 @@ instance EllipticCurve WeierstrassCurve Affine where
 -- point @(X/Z^2,Y/Z^3)@ in affine coordinates.
 instance EllipticCurvePoint WeierstrassCurve Jacobian where
 
-  toAffine (EC _ (FieldOperations _ _ _ _ (*) inv _ (^))) (Jacobian x y z)
+  toAffine (EC _ FieldOperations {..}) (Jacobian x y z)
     | z == zero = AffinePointAtInfinity
     | otherwise =
-      let iz3 = inv (z ^ 3)
+      let iz3 = (./) (z ^ 3)
       in Affine (x * iz3 * z) (y * iz3)
 
   fromAffine _ (Affine x y)          = Jacobian x   y   one

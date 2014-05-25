@@ -79,16 +79,21 @@ class (Eq f) => Field f where
 
 
 -- | A record containing all the field operations specialized on a field
--- parameter.
+-- parameter. The @FieldOperations@ record is designed to be used together
+-- with the @RecordWildCards@ language extension to quickly bring in familiar
+-- names for field operations into scope. Note that this causes the existing
+-- names of arithmetic operations to be shadowed and loses fixity.
 data FieldOperations f = FieldOperations
-  { fadd :: f -> f -> f
-  , fneg :: f -> f
-  , fsub :: f -> f -> f
-  , frep :: Integer -> f -> f
-  , fmul :: f -> f -> f
-  , finv :: f -> f
-  , fdiv :: f -> f -> f
-  , fpow :: f -> Integer -> f
+  { (+) :: f -> f -> f        -- ^ field addition
+  , (.-) :: f -> f            -- ^ field negation
+  , (-) :: f -> f -> f        -- ^ field subtraction
+  , (#) :: Integer -> f -> f  -- ^ repeated addition (multiplication by an
+                              -- integer)
+  , (*) :: f -> f -> f        -- ^ field multiplication
+  , (./) :: f -> f            -- ^ field inversion
+  , (/) :: f -> f -> f        -- ^ field division
+  , (^) :: f -> Integer -> f  -- ^ repeated multiplication (exponentiation by
+                              -- an integer)
   }
 
 
