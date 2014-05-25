@@ -49,7 +49,7 @@ test-suite test-ec
   other-modules:
     BasicECC
   build-depends:
-    base >=4.6 && <4.7,
+    base >=4.6 && <4.8,
     ec,
     hspec,
     QuickCheck

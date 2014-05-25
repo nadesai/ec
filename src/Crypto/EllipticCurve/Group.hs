@@ -33,6 +33,10 @@ import Crypto.EllipticCurve.Point
 -- representations of the curve to have different implementations.
 class (EllipticCurvePoint c p) => EllipticCurve c p where
 
+  -- | @onCurve c p@ returns @True@ if and only if the given point is on the
+  -- elliptic curve.
+  onCurve  :: (Field f) => EC c f -> p c f -> Bool
+
   -- | Add two points on the elliptic curve. Since elliptic curve point
   -- addition formulae are not usually unified, the add method will usually
   -- have to identify when the points are equivalent and perform a doubling
