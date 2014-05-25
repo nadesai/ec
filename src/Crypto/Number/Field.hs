@@ -31,7 +31,7 @@ import Crypto.Number.Power ( expsq )
 
 -- | The Field class provides an interface for defining the algebraic
 -- operations over a field, which may be parameterized by additional data.
-class Field f where
+class (Eq f) => Field f where
 
   -- | The field parameterization type. This parameter allows the field to be
   -- dynamically parameterized by runtime data. If the field type does not
