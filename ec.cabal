@@ -26,6 +26,7 @@ library
     Crypto.Number
   other-modules:
     Crypto.EllipticCurve.Curve
+    Crypto.EllipticCurve.Curve.Weierstrass
     Crypto.EllipticCurve.Group
     Crypto.EllipticCurve.Point
     Crypto.EllipticCurve.Type

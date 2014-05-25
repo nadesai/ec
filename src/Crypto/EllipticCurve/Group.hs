@@ -43,6 +43,11 @@ class (EllipticCurvePoint c p) => EllipticCurve c p where
   -- operation instead.
   add      :: (Field f) => EC c f -> p c f -> p c f -> p c f
 
+  -- | Double an elliptic curve point. This method defaults to adding a point
+  -- to itself but can be overridden with a more efficient implementation.
+  double   :: (Field f) => EC c f -> p c f -> p c f
+  double c p = add c p p
+
   -- | Negate a point on the elliptic curve.
   negate   :: (Field f) => EC c f -> p c f -> p c f
 

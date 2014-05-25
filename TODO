@@ -4,10 +4,11 @@ Crypto.EllipticCurve.Curve
 --------------------------
 * Add support for curves/points with different fundamental operations than
   double and add.
+* Have `montgomery` use the more efficient `double` method rather than adding
+  a point to itself in order to double. (Crypto.Number.Power)
 
 Crypto.EllipticCurve.Field
 --------------------------
-* Examine the feasibility of using Template Haskell to support cleaner
-  implementations of EllipticCurve's add and double methods.
-
+* Add support for doubling/squaring methods in case these are more efficient
+  in the underlying field.
 
