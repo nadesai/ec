@@ -9,8 +9,6 @@
 --
 ------------------------------------------------------------------------------
 
-
-
 module Crypto.Number.Modular
   (
     expm
@@ -25,6 +23,7 @@ module Crypto.Number.Modular
   ) where
 
 import Data.Bits ( Bits, (.&.) )
+
 
 
 -- Run the exponentiation algorithm with the given operation.

@@ -1,6 +1,6 @@
-{-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE KindSignatures        #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Crypto.EllipticCurve.Point

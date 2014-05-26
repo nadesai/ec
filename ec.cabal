@@ -23,6 +23,7 @@ library
   hs-source-dirs: src
   exposed-modules:
     Crypto.EllipticCurve
+    Crypto.EllipticCurve.StandardCurves
     Crypto.Number
   other-modules:
     Crypto.EllipticCurve.Curve
@@ -32,13 +33,15 @@ library
     Crypto.EllipticCurve.Type
     Crypto.Number.Bits
     Crypto.Number.Field
+    Crypto.Number.Mod
     Crypto.Number.Modular
     Crypto.Number.Power
     Crypto.Number.Prime
   build-depends:
-    base >=4.6 && <4.8,
-    ghc-prim,
-    integer-gmp
+      base >=4.6 && <5
+    , ghc-prim
+    , integer-gmp
+    , modular-arithmetic >= 1.2
   default-language: Haskell2010
   ghc-options: -Wall -fno-warn-type-defaults -fno-warn-name-shadowing
 
@@ -50,10 +53,10 @@ test-suite test-ec
   other-modules:
     BasicECC
   build-depends:
-    base >=4.6 && <4.8,
-    ec,
-    hspec,
-    QuickCheck
+      base >=4.6 && <5
+    , ec
+    , hspec
+    , QuickCheck
   default-language: Haskell2010
   ghc-options: -Wall -fno-warn-type-defaults
 

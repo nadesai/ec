@@ -1,5 +1,3 @@
-{-# LANGUAGE MultiParamTypeClasses #-}
-{-# LANGUAGE RecordWildCards       #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Crypto.EllipticCurve.Curve
