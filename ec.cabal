@@ -8,7 +8,7 @@ homepage:            https://github.com/bazad/ec
 license:             PublicDomain
 license-file:        LICENSE
 author:              Brandon Azad <bazad@stanford.edu>
-                     Nikhil Desai
+                     Nikhil Desai <nikhild@stanford.edu>
 maintainer:          bazad@stanford.edu
 category:            Crypto
 build-type:          Simple
