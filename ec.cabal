@@ -28,6 +28,7 @@ library
   other-modules:
     Crypto.EllipticCurve.Curve
     Crypto.EllipticCurve.Curve.Weierstrass
+    Crypto.EllipticCurve.OpenSSL.P521
     Crypto.EllipticCurve.Group
     Crypto.EllipticCurve.Point
     Crypto.EllipticCurve.Type
@@ -37,11 +38,18 @@ library
     Crypto.Number.Modular
     Crypto.Number.Power
     Crypto.Number.Prime
+  c-sources:
+    cbits/p521.c
+  include-dirs:
+    include
+  includes:
+    p521.h
   build-depends:
       base >=4.6 && <5
     , ghc-prim
-    , integer-gmp
+    , integer-gmp >= 0.5.1.0
     , modular-arithmetic >= 1.2
+    , primitive
   default-language: Haskell2010
   ghc-options: -Wall -fno-warn-type-defaults -fno-warn-name-shadowing
 

@@ -63,6 +63,11 @@ class (Eq f) => Field f where
   -- | Multiply two elements of the field.
   mul :: FieldParameter f -> f -> f -> f
 
+  -- | Square an element of the field. This may be more efficient than
+  -- multiplying an element by itself.
+  sqr :: FieldParameter f -> f -> f
+  sqr p a = mul p a a
+
   -- | Invert a nonzero element of the field.
   inv :: FieldParameter f -> f -> f
 
@@ -90,6 +95,7 @@ data FieldOperations f = FieldOperations
   , (#) :: Integer -> f -> f  -- ^ repeated addition (multiplication by an
                               -- integer)
   , (*) :: f -> f -> f        -- ^ field multiplication
+  , (^.) :: f -> f            -- ^ field squaring
   , (./) :: f -> f            -- ^ field inversion
   , (/) :: f -> f -> f        -- ^ field division
   , (^) :: f -> Integer -> f  -- ^ repeated multiplication (exponentiation by
@@ -100,7 +106,7 @@ data FieldOperations f = FieldOperations
 -- | Get the field operations for the given field parameter.
 ops :: (Field f) => FieldParameter f -> FieldOperations f
 ops p = FieldOperations (add p) (neg p) (sub p) (rep p)
-                        (mul p) (inv p) (div p) (pow p)
+                        (mul p) (sqr p) (inv p) (div p) (pow p)
 
 
 

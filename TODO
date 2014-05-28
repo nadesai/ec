@@ -2,8 +2,12 @@ TODO
 
 Crypto.EllipticCurve.Curve
 --------------------------
+* Edwards curves.
 * Add support for curves/points with different fundamental operations than
   double and add.
+
+Crypto.Number.Power
+-------------------
 * Have `montgomery` use the more efficient `double` method rather than adding
   a point to itself in order to double. (Crypto.Number.Power)
 
@@ -11,4 +15,13 @@ Crypto.EllipticCurve.Field
 --------------------------
 * Add support for doubling/squaring methods in case these are more efficient
   in the underlying field.
+
+Crypto.EllipticCurve.OpenSSL.P521
+---------------------------------
+* Make addition/subtraction/negation/etc not overflow in C.
+
+Misc
+----
+* Add a wrapper for ECDH that returns the X-coordinate of multiplication.
+
 
