@@ -1,4 +1,4 @@
-/* src/Crypto/EllipticCurve/OpenSSL/p521.c
+/* cbits/p521.c
  *
  * An implementation of the prime field modulo 2^521 - 1. This file was
  * initially part of OpenSSL, and has been modified for EC. The original
@@ -36,6 +36,18 @@
 #include "p521.h"
 
 
+static void flip_endian(u8 *out, const u8 *in, unsigned len);
+static void felem_one(felem out);
+static void felem_assign(felem out, const felem in);
+static void felem_sum64(felem out, const felem in);
+static void felem_scalar(felem out, const felem in, limb scalar);
+static void felem_diff64(felem out, const felem in);
+static void felem_diff_128_64(largefelem out, const felem in);
+static void felem_diff128(largefelem out, const largefelem in);
+static void felem_square(largefelem out, const felem in);
+static void felem_mul(largefelem out, const felem in1, const felem in2);
+static void felem_reduce(felem out, const largefelem in);
+static limb felem_is_zero(const felem in);
 static void felem_contract(felem out, const felem in);
 
 

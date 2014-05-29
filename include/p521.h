@@ -1,4 +1,4 @@
-/* src/Crypto/EllipticCurve/OpenSSL/p521.h
+/* include/p521.h
  *
  * An implementation of the prime field modulo 2^521 - 1. This file was
  * initially part of OpenSSL, and has been modified for EC. The original
@@ -85,19 +85,9 @@ void bin66_to_felem(felem out, const u8 in[66]);
  * array. This assumes that the CPU is little-endian. */
 void felem_to_bin66(u8 out[66], const felem in);
 
-///* To preserve endianness when using BN_bn2bin and BN_bin2bn */
-//void flip_endian(u8 *out, const u8 *in, unsigned len);
-
 
 /* Field operations
  * ---------------- */
-
-//void felem_one(felem out);
-
-//void felem_assign(felem out, const felem in);
-
-///* felem_sum64 sets out = out + in. */
-//void felem_sum64(felem out, const felem in);
 
 /* felem_sum sets out = in1 + in2.
  * This operation cannot be repeated indefinitely without overflowing the
@@ -116,59 +106,9 @@ void felem_sum(felem out, const felem in1, const felem in2);
  */
 void felem_neg(felem out, const felem in);
 
-///* felem_diff64 subtracts |in| from |out|
-// * On entry:
-// *   in[i] < 2^59 + 2^14
-// * On exit:
-// *   out[i] < 2^62
-// */
-//void felem_diff64(felem out, const felem in);
-
 /* felem_diff subtracts |in2| from |in1| and stores the result in |out|.
  */
 void felem_diff(felem out, const felem in1, const felem in2);
-
-///* felem_diff_128_64 subtracts |in| from |out|
-// * On entry:
-// *   in[i] < 2^62 + 2^17
-// * On exit:
-// *   out[i] < out[i] + 2^63
-// */
-//void felem_diff_128_64(largefelem out, const felem in);
-//
-///* felem_diff_128_64 subtracts |in| from |out|
-// * On entry:
-// *   in[i] < 2^126
-// * On exit:
-// *   out[i] < out[i] + 2^127 - 2^69
-// */
-//void felem_diff128(largefelem out, const largefelem in);
-
-///* felem_square sets |out| = |in|^2
-// * On entry:
-// *   in[i] < 2^62
-// * On exit:
-// *   out[i] < 17 * max(in[i]) * max(in[i])
-// */
-//void felem_square(largefelem out, const felem in);
-//
-///* felem_mul sets |out| = |in1| * |in2|
-// * On entry:
-// *   in1[i] < 2^64
-// *   in2[i] < 2^63
-// * On exit:
-// *   out[i] < 17 * max(in1[i]) * max(in2[i])
-// */
-//void felem_mul(largefelem out, const felem in1, const felem in2);
-//
-//
-///* felem_reduce converts a largefelem to an felem.
-// * On entry:
-// *   in[i] < 2^128
-// * On exit:
-// *   out[i] < 2^59 + 2^14
-// */
-//void felem_reduce(felem out, const largefelem in);
 
 void felem_square_reduce(felem out, const felem in);
 
@@ -184,18 +124,7 @@ void felem_mul_reduce(felem out, const felem in1, const felem in2);
 void felem_inv(felem out, const felem in);
 
 
-///* felem_is_zero returns a limb with all bits set if |in| == 0 (mod p) and 0
-// * otherwise.
-// * On entry:
-// *   in[i] < 2^59 + 2^14
-// */
-//limb felem_is_zero(const felem in);
 
 int felem_is_zero_int(const felem in);
 
-///* felem_contract converts |in| to its unique, minimal representation.
-// * On entry:
-// *   in[i] < 2^59 + 2^14
-// */
-//void felem_contract(felem out, const felem in);
 
