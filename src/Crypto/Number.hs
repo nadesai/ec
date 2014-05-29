@@ -14,14 +14,14 @@ module Crypto.Number
 
     module Crypto.Number.Bits
   , module Crypto.Number.Modular
+  , module Crypto.Number.Mod
   , module Crypto.Number.Power
-  , module Crypto.Number.Prime
 
   ) where
 
 import Crypto.Number.Bits
 import Crypto.Number.Modular
+import Crypto.Number.Mod
 import Crypto.Number.Power
-import Crypto.Number.Prime
 
 

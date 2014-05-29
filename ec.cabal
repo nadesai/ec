@@ -37,7 +37,6 @@ library
     Crypto.Number.Mod
     Crypto.Number.Modular
     Crypto.Number.Power
-    Crypto.Number.Prime
   c-sources:
     cbits/p521.c
   include-dirs:

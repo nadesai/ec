@@ -25,7 +25,7 @@ module Crypto.Number.Field
   ) where
 
 import Prelude hiding      ( div )
-import Crypto.Number.Power ( expsq )
+import Crypto.Number.Power ( expsq, expsq' )
 
 
 
@@ -58,7 +58,7 @@ class (Eq f) => Field f where
   -- | Multiply a field element by an integer. This is equivalent to
   -- repeatedly adding the field element to itself.
   rep :: FieldParameter f -> Integer -> f -> f
-  rep p = flip $ expsq (add p) (neg p) (zero)
+  rep p = flip $ expsq' (add p) (neg p) (zero)
 
   -- | Multiply two elements of the field.
   mul :: FieldParameter f -> f -> f -> f
@@ -80,7 +80,7 @@ class (Eq f) => Field f where
   -- exponent is positive, this is equivalent to repeatedly multiplying the
   -- field element by itself.
   pow :: FieldParameter f -> f -> Integer -> f
-  pow p = expsq (mul p) (inv p) (one)
+  pow p = expsq (mul p) (sqr p) (inv p) (one)
 
 
 -- | A record containing all the field operations specialized on a field

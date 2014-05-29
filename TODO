@@ -6,11 +6,6 @@ Crypto.EllipticCurve.Curve
 * Add support for curves/points with different fundamental operations than
   double and add.
 
-Crypto.Number.Power
--------------------
-* Have `montgomery` use the more efficient `double` method rather than adding
-  a point to itself in order to double. (Crypto.Number.Power)
-
 Crypto.EllipticCurve.Field
 --------------------------
 * Add support for doubling/squaring methods in case these are more efficient

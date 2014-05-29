@@ -21,7 +21,7 @@ module Crypto.EllipticCurve.Group
 import Prelude hiding ( negate )
 
 import Crypto.Number.Field hiding ( add )
-import Crypto.Number.Power
+import Crypto.Number.Power        ( montgomery )
 import Crypto.EllipticCurve.Type
 import Crypto.EllipticCurve.Point
 
@@ -58,7 +58,8 @@ class (EllipticCurvePoint c p) => EllipticCurve c p where
   -- implementation uses the Montgomery method of point multiplication to
   -- mitigate the leak of timing information.
   multiply :: (Field f) => EC c f -> Int -> Integer -> p c f -> p c f
-  multiply c n d p = montgomery (add c) (negate c) (zeroPoint c) n p d
+  multiply c n d p = montgomery (add c) (double c) (negate c) (zeroPoint c)
+                                n p d
 
 
 
