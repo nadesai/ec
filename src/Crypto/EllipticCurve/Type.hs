@@ -29,6 +29,7 @@ data EC c f = EC (c f) (FieldOperations f)
 -- elliptic curve group.
 data ECP c p f = ECP
   { ecpCurve     :: EC c f
+  , ecpBitLength :: Int
   , ecpGenerator :: p c f
   , ecpOrder     :: Integer
   , ecpCofactor  :: Integer
