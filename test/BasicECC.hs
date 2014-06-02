@@ -24,6 +24,7 @@ module BasicECC
 
 
 
+import Prelude hiding ( negate )
 import Crypto.Number ( invm', bitLength )
 import Data.Bits     ( testBit )
 
@@ -114,13 +115,20 @@ onCurve :: WeierstrassCurve -> JacobianPoint -> Bool
 onCurve _ pt | isPointAtInfinity pt = True
 onCurve (WeierstrassPrimeCurve { weierstrassP = p, weierstrassA = a
                                , weierstrassB = b })
-        (JacobianPoint { jacobianX = x, jacobianY = y, jacobianZ = z })
-  = let c *% d = c * d `mod` p
-        c +% d = (c + d) `mod` p
-        z2 = z *% z
-        z4 = z2 *% z2
-        z6 = z2 *% z4
-    in y *% y == (x *% x *% x) +% (a *% x *% z4) +% (b *% z6)
+        (JacobianPoint { jacobianX = x, jacobianY = y, jacobianZ = z }) =
+  let c *% d = c * d `mod` p
+      c +% d = (c + d) `mod` p
+      z2 = z *% z
+      z4 = z2 *% z2
+      z6 = z2 *% z4
+  in y *% y == (x *% x *% x) +% (a *% x *% z4) +% (b *% z6)
+
+
+-- | Negate an elliptic curve point.
+negate :: WeierstrassCurve -> JacobianPoint -> JacobianPoint
+negate (WeierstrassPrimeCurve { weierstrassP = p })
+        (JacobianPoint { jacobianX = xP, jacobianY = yP, jacobianZ = zP }) =
+  JacobianPoint xP ((-yP) `mod` p) zP
 
 
 -- | Add elliptic curve points.
@@ -157,21 +165,21 @@ add c@(WeierstrassPrimeCurve { weierstrassP = p })
 -- hyperelliptic.org/EFD/g1p/auto-shortw-jacobian.html
 double :: WeierstrassCurve -> JacobianPoint -> JacobianPoint
 double (WeierstrassPrimeCurve { weierstrassP = p, weierstrassA = a })
-        (JacobianPoint { jacobianX = xP, jacobianY = yP, jacobianZ = zP })
-  = let xP2 = xP^2 `mod` p                        -- 1S
-        yP2 = yP^2 `mod` p                        -- 1S
-        yP4 = yP2^2 `mod` p                       -- 1S
-        zP2 = zP^2 `mod` p                        -- 1S
-        s   = 2 * ((xP + yP2)^2 - xP2 - yP4) `mod` p
-                                                  -- 1S, 1(*2), 3A
-        m   = (3 * xP2 + a * zP2^2) `mod` p
-                                                  -- 1S, 1(*a), 1(*3), 1A
-        xR  = (m^2 - 2 * s) `mod` p               -- 1S, 1(*2), 1A
-        yR  = (m * (s - xR) - 8 * yP4) `mod` p    -- 1M, 1(*8), 2A
-        zR  = ((yP + zP)^2 - yP2 - zP2) `mod` p
-                                                  -- 1S, 3A
-    in JacobianPoint xR yR zR                     -- 1M, 8S, 1(*a), 1(*8),
-                                                  -- 1(*3), 2(*2), 10A
+        (JacobianPoint { jacobianX = xP, jacobianY = yP, jacobianZ = zP }) =
+  let xP2 = xP^2 `mod` p                        -- 1S
+      yP2 = yP^2 `mod` p                        -- 1S
+      yP4 = yP2^2 `mod` p                       -- 1S
+      zP2 = zP^2 `mod` p                        -- 1S
+      s   = 2 * ((xP + yP2)^2 - xP2 - yP4) `mod` p
+                                                -- 1S, 1(*2), 3A
+      m   = (3 * xP2 + a * zP2^2) `mod` p
+                                                -- 1S, 1(*a), 1(*3), 1A
+      xR  = (m^2 - 2 * s) `mod` p               -- 1S, 1(*2), 1A
+      yR  = (m * (s - xR) - 8 * yP4) `mod` p    -- 1M, 1(*8), 2A
+      zR  = ((yP + zP)^2 - yP2 - zP2) `mod` p
+                                                -- 1S, 3A
+  in JacobianPoint xR yR zR                     -- 1M, 8S, 1(*a), 1(*8),
+                                                -- 1(*3), 2(*2), 10A
 
 
 
@@ -182,7 +190,9 @@ double (WeierstrassPrimeCurve { weierstrassP = p, weierstrassA = a })
 -- be secure against timing attacks.
 -- However, information may still be leaked.
 multiply :: WeierstrassCurve -> JacobianPoint -> Integer -> JacobianPoint
-multiply c p0 d = go pointAtInfinity p0 n0
+multiply c p0 d
+  | d < 0     = multiply c (negate c p0) (-d)
+  | otherwise = go pointAtInfinity p0 n0
   where
     n0 = case c of
       WeierstrassPrimeCurve { weierstrassP = p } -> bitLength p
