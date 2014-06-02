@@ -114,7 +114,8 @@ instance EllipticCurve Weierstrass Jacobian where
     | z1 == zero = p
     | otherwise  = jacobianDouble' c x1 y1 z1 (z1^2)
 
-  negate = undefined
+  negate c@(EC _ FieldOperations {..}) p@(Jacobian x1 y1 z1) =
+    Jacobian x1 ((.-) y1) z1
 
 
 -- | Internal Jacobian adding routine.
