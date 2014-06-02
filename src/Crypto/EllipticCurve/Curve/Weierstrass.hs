@@ -68,6 +68,7 @@ instance EllipticCurve Weierstrass Affine where
       in Affine x3 y3
 
   negate (EC _ FieldOperations {..}) (Affine x y) = Affine x ((.-) y)
+  negate _ AffinePointAtInfinity = AffinePointAtInfinity
 
   -- Default implementation of 'multiply'.
 
