@@ -50,6 +50,13 @@ class EllipticCurvePoint c p where
   isZeroPoint     :: (Field f) => EC c f -> p c f -> Bool
   isZeroPoint c p = toAffine c p == AffinePointAtInfinity
 
+  -- | Extract the x- and y-coordinates of the point, or 'Nothing' for the
+  -- point at infinity.
+  affineXY        :: (Field f) => EC c f -> p c f -> Maybe (f, f)
+  affineXY c p = case toAffine c p of
+    Affine x y -> Just (x, y)
+    _          -> Nothing
+
 
 -- | Affine representation of a point.  This is the simplest representation in
 -- which the @x@- and @y@-coordinates of the point are stored explicitly.
