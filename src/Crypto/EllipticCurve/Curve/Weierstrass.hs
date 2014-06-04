@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns          #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE RecordWildCards       #-}
 ------------------------------------------------------------------------------
@@ -42,12 +43,12 @@ instance EllipticCurve Weierstrass Affine where
 
   onCurve (EC (Weierstrass a b) FieldOperations {..}) p
     | AffinePointAtInfinity <- p = True
-    | (Affine x y)          <- p = y ^ 2 == (x ^ 3) + (a * x) + b
+    | (Affine !x !y)        <- p = y ^ 2 == (x ^ 3) + (a * x) + b
 
   add c@(EC (Weierstrass a _) FieldOperations {..}) p1 p2
     | isZeroPoint c p1 = p2
     | isZeroPoint c p2 = p1
-    | (Affine x1 y1) <- p1, (Affine x2 y2) <- p2 =
+    | (Affine !x1 !y1) <- p1, (Affine !x2 !y2) <- p2 =
       let (dx, dy) = (x2 - x1, y2 - y1)
           add' s =
             let x3 = (s ^ 2) - x2 - x1
@@ -61,13 +62,13 @@ instance EllipticCurve Weierstrass Affine where
 
   double c@(EC (Weierstrass a _) FieldOperations {..}) p
     | isZeroPoint c p = p
-    | (Affine x1 y1) <- p =
+    | (Affine !x1 !y1) <- p =
       let s  = (3 # (x1 ^ 2) + a) / (2 # y1)
           x3 = (s^2) - (2 # x1)
           y3 = s * (x1 - x3) - y1
       in Affine x3 y3
 
-  negate (EC _ FieldOperations {..}) (Affine x y) = Affine x ((.-) y)
+  negate (EC _ FieldOperations {..}) (Affine !x !y) = Affine x ((.-) y)
   negate _ AffinePointAtInfinity = AffinePointAtInfinity
 
   -- Default implementation of 'multiply'.
@@ -88,7 +89,7 @@ instance EllipticCurvePoint Weierstrass Jacobian where
       let iz3 = (./) (z ^ 3)
       in Affine (x * iz3 * z) (y * iz3)
 
-  fromAffine _ (Affine x y)          = Jacobian x   y   one
+  fromAffine _ (Affine !x !y)        = Jacobian x   y   one
   fromAffine _ AffinePointAtInfinity = Jacobian one one zero
 
   zeroPoint _ = (Jacobian one one zero)
@@ -99,23 +100,24 @@ instance EllipticCurvePoint Weierstrass Jacobian where
 -- | The definition for Weierstrass curve groups in Jacobian form.
 instance EllipticCurve Weierstrass Jacobian where
 
-  onCurve (EC (Weierstrass a b) FieldOperations {..}) (Jacobian x y z) =
+  onCurve (EC (Weierstrass a b) FieldOperations {..}) (Jacobian !x !y !z) =
     let z2 = z^2
         z4 = z2^2
         z6 = z2 * z4
     in y^2 == (x^3) + (a * x * z4) + (b * z6)
 
   add c@(EC _ FieldOperations {..})
-      p1@(Jacobian x1 y1 z1) p2@(Jacobian x2 y2 z2)
-    | z1 == zero = p2
-    | z2 == zero = p1
-    | otherwise = jacobianAdd c x1 y1 z1 x2 y2 z2
+      p1@(Jacobian !x1 !y1 !z1) p2@(Jacobian !x2 !y2 !z2)
+    | z1 == zero = p3 `seq` p2
+    | z2 == zero = p3 `seq` p1
+    | otherwise  = p3 `seq` p3
+    where
+      p3 = jacobianAdd c x1 y1 z1 x2 y2 z2
 
-  double c@(EC _ FieldOperations {..}) p@(Jacobian x1 y1 z1)
-    | z1 == zero = p
-    | otherwise  = jacobianDouble' c x1 y1 z1 (z1^2)
+  double c@(EC _ FieldOperations {..}) p@(Jacobian !x1 !y1 !z1) =
+    jacobianDouble' c x1 y1 z1 (z1^2)
 
-  negate c@(EC _ FieldOperations {..}) p@(Jacobian x1 y1 z1) =
+  negate c@(EC _ FieldOperations {..}) p@(Jacobian !x1 !y1 !z1) =
     Jacobian x1 ((.-) y1) z1
 
 

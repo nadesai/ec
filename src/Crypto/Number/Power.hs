@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Crypto.Number.Power
@@ -73,8 +74,8 @@ montgomery mul sqr inv id n a d = gpow montgomery' inv id a d
   where
     montgomery' a d = go id a n
       where
-        go r0 r1 n
-          | n == -1     = (r0 `seq` r1) `seq` r0
+        go !r0 !r1 !n
+          | n == -1     = r0
           | testBit d n = go (r0 `mul` r1) (sqr r1)      (n - 1)
           | otherwise   = go (sqr r0)      (r0 `mul` r1) (n - 1)
 

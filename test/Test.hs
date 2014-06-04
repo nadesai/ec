@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeSynonymInstances #-}
+{-# LANGUAGE BangPatterns #-}
 ------------------------------------------------------------------------------
 -- |
 -- Module      : Test
@@ -122,7 +123,7 @@ b_pt_prop f = property $ (\r -> f (b_ptAt r))
 -- BasicECC implementation.
 ------------------------------------------------------------------------------
 
-type Point = EC.Affine EC.Weierstrass S.P521
+type Point = EC.Jacobian EC.Weierstrass S.P521
 
 e_p521 :: EC.EC EC.Weierstrass S.P521
 e_p521 = S.p521
@@ -182,7 +183,6 @@ main = hspec $ describe "Testing EC" $ do
 
     it "EC and BasicECC agree on point multiplication" $ property $
       \n m -> b_pt (b_mul (b_ptAt n) m) == e_pt (e_mul (e_ptAt n) m)
-
 
 
 

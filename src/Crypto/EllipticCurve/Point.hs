@@ -1,3 +1,4 @@
+{-# LANGUAGE BangPatterns          #-}
 {-# LANGUAGE FlexibleInstances     #-}
 {-# LANGUAGE KindSignatures        #-}
 {-# LANGUAGE MultiParamTypeClasses #-}
@@ -64,7 +65,7 @@ class EllipticCurvePoint c p where
 -- inversion to add points under the affine representation, which makes it
 -- less efficient than other point representations for elliptic curve point
 -- multiplication.
-data Affine (c :: * -> *) f = Affine { affineX, affineY :: f }
+data Affine (c :: * -> *) f = Affine { affineX, affineY :: !f }
                             | AffinePointAtInfinity
                             deriving (Eq, Show)
 
@@ -82,7 +83,7 @@ instance EllipticCurvePoint c Affine where
 -- For Weierstrass curves, this point represents the affine point
 -- @(X/Z^2,Y/Z^3)@.
 data Jacobian (c :: * -> *) f = Jacobian
-  { jacobianX, jacobianY, jacobianZ :: f }
+  { jacobianX, jacobianY, jacobianZ :: !f }
   deriving (Show)
 
 -- Instances of @Jacobian@ are provided by specific curves in the module
